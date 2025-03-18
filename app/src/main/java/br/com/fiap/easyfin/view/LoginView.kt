@@ -22,11 +22,14 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -51,6 +55,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import br.com.fiap.easyfin.R
 import br.com.fiap.easyfin.components.Toaster
+import br.com.fiap.easyfin.ui.theme.EasyFinTheme
 import br.com.fiap.easyfin.ui.theme.PrimaryBlue
 import br.com.fiap.easyfin.ui.theme.PrimaryLight
 import br.com.fiap.easyfin.viewmodel.AuthViewModel
@@ -103,6 +108,12 @@ fun LoginView(
                         brush = Brush.linearGradient(
                             colors = listOf(PrimaryBlue, PrimaryLight)
                         )
+                    )
+                    .shadow(
+                        elevation = 8.dp,
+                        shape = CircleShape,
+                        spotColor = PrimaryBlue.copy(alpha = 0.3f),
+                        ambientColor = PrimaryBlue.copy(alpha = 0.15f)
                     ),
                 contentAlignment = Alignment.Center
             ) {
@@ -136,16 +147,26 @@ fun LoginView(
             
             Spacer(modifier = Modifier.height(32.dp))
             
-            // Banner image
-            Image(
-                painter = painterResource(id = R.drawable.signup_banner),
-                contentDescription = "Login Banner",
+            // Banner image in card with elevation
+            Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
-                    .clip(RoundedCornerShape(16.dp)),
-                contentScale = ContentScale.Crop
-            )
+                    .height(200.dp),
+                shape = RoundedCornerShape(24.dp),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 4.dp
+                ),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White
+                )
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.signup_banner),
+                    contentDescription = "Login Banner",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
             
             Spacer(modifier = Modifier.height(32.dp))
             
@@ -171,7 +192,13 @@ fun LoginView(
                             tint = MaterialTheme.colorScheme.primary
                         )
                     },
-                    singleLine = true
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        focusedLabelColor = MaterialTheme.colorScheme.primary,
+                        unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    )
                 )
                 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -187,11 +214,17 @@ fun LoginView(
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Lock,
-                            contentDescription = "Password",
+                            contentDescription = "Senha",
                             tint = MaterialTheme.colorScheme.primary
                         )
                     },
-                    singleLine = true
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        focusedLabelColor = MaterialTheme.colorScheme.primary,
+                        unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    )
                 )
                 
                 Spacer(modifier = Modifier.height(32.dp))
@@ -259,6 +292,8 @@ fun LoginView(
 @Preview(showBackground = true, device = "id:pixel_5", showSystemUi = true)
 @Composable
 fun LoginViewPreview() {
-    val navController = rememberNavController()
-    LoginView(navController = navController)
+    EasyFinTheme {
+        val navController = rememberNavController()
+        LoginView(navController = navController)
+    }
 }

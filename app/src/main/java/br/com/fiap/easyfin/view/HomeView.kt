@@ -51,11 +51,11 @@ fun HomeView(
     val userName by homeViewModel.userName
     val scrollState = rememberScrollState()
     
-    // State for the search functionality
+    // Estado para a funcionalidade de busca
     var searchQuery by remember { mutableStateOf("") }
     var isSearching by remember { mutableStateOf(false) }
     
-    // Sample transactions - in a real app, these would come from a ViewModel
+    // Transações de exemplo - em um app real, viriam de um ViewModel
     val allTransactions = listOf(
         TransactionModel(
             id = "1",
@@ -83,7 +83,7 @@ fun HomeView(
         )
     )
     
-    // Filter transactions based on search query
+    // Filtra transações baseado na busca
     val filteredTransactions = if (searchQuery.isEmpty()) {
         allTransactions
     } else {
@@ -96,22 +96,18 @@ fun HomeView(
     
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(onItemSelected = {
-                // Handle navigation based on selected item
-            })
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /* Handle add transaction */ },
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = Color.White,
-                shape = CircleShape
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add, 
-                    contentDescription = "Add Transaction"
-                )
-            }
+            BottomNavigationBar(
+                onItemSelected = { selectedItem ->
+                    when(selectedItem) {
+                        "Inicio" -> { /* Já está na home, não faz nada */ }
+                        "Movimentações" -> navController.navigate("transactions")
+                        "Perfil" -> navController.navigate("profile")
+                    }
+                },
+                onAddButtonClick = {
+                    navController.navigate("add_transaction")
+                }
+            )
         },
         content = { padding ->
             Column(
@@ -122,7 +118,7 @@ fun HomeView(
                         bottom = padding.calculateBottomPadding()
                     )
             ) {
-                // Header Section
+                // Seção do Cabeçalho
                 HeaderTitle(
                     name = userName,
                     onLogout = {
@@ -135,76 +131,80 @@ fun HomeView(
                     }
                 )
                 
-                // Search Bar
+                // Barra de Busca
                 SearchBar(
                     value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    onSearch = { /* Execute search */ },
-                    onFilterClick = { /* Show filter options */ }
+                    onValueChange = { 
+                        searchQuery = it 
+                        isSearching = it.isNotEmpty()
+                    },
+                    onSearch = { /* Executa busca */ },
+                    onFilterClick = { /* Mostra opções de filtro */ }
                 )
                 
                 if (!isSearching) {
-                    // Main content when not searching
+                    // Conteúdo principal quando não está buscando
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1f)
                             .verticalScroll(scrollState)
                     ) {
-                        // Balance Section
+                        // Seção do Saldo
                         BalanceCard(
                             balance = 2500.0,
-                            onOptionsClick = { /* Show balance options */ }
+                            onOptionsClick = { /* Mostra opções de saldo */ }
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         
-                        // Financial Summary Section
+                        // Seção do Resumo Financeiro
                         SectionTitle("Resumo Financeiro")
                         SummaryCard()
                         
-                        // Transactions Section
+                        // Seção de Transações
                         SectionTitle("Movimentações Recentes")
                         
                         if (allTransactions.isEmpty()) {
-                            // Show empty state when no transactions
+                            // Mostra estado vazio quando não há transações
                             EmptyState(
                                 title = "Nenhuma transação",
                                 message = "Você ainda não possui nenhuma transação. Adicione sua primeira transação clicando no botão abaixo.",
                                 icon = Icons.Default.List,
                                 buttonText = "Adicionar Transação",
-                                onButtonClick = { /* Add transaction */ }
+                                onButtonClick = { navController.navigate("add_transaction") }
                             )
                         } else {
-                            // Show the transactions
+                            // Mostra as transações
                             allTransactions.forEach { transaction ->
                                 TransactionCard(
                                     transaction = transaction,
                                     onClick = {
-                                        // Navigate to transaction details
+                                        // Navega para detalhes da transação
+                                        navController.navigate("transaction_details/${transaction.id}")
                                     }
                                 )
                             }
                         }
                         
-                        // Add some space at the bottom for better UX
+                        // Adiciona espaço no final para melhor experiência do usuário
                         Spacer(modifier = Modifier.height(80.dp))
                     }
                 } else {
-                    // Search results
+                    // Resultados da busca
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1f)
                     ) {
                         if (filteredTransactions.isEmpty()) {
-                            // Show empty state for no search results
+                            // Mostra estado vazio para nenhum resultado encontrado
                             EmptyState(
                                 title = "Nenhum resultado",
                                 message = "Não encontramos nenhuma transação para \"$searchQuery\". Tente usar termos diferentes.",
                                 icon = Icons.Default.List
                             )
                         } else {
-                            // Show filtered transactions
+                            // Mostra transações filtradas
                             LazyColumn(
                                 modifier = Modifier.fillMaxSize()
                             ) {
@@ -216,7 +216,8 @@ fun HomeView(
                                     TransactionCard(
                                         transaction = transaction,
                                         onClick = {
-                                            // Navigate to transaction details
+                                            // Navega para detalhes da transação
+                                            navController.navigate("transaction_details/${transaction.id}")
                                         }
                                     )
                                 }

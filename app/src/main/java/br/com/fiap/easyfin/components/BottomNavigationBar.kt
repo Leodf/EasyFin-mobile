@@ -26,12 +26,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.fiap.easyfin.ui.theme.PrimaryBlue
 
 data class BottomMenuItem(
     val label: String,
@@ -40,7 +42,8 @@ data class BottomMenuItem(
 
 @Composable
 fun BottomNavigationBar(
-    onItemSelected: (String) -> Unit = {}
+    onItemSelected: (String) -> Unit = {},
+    onAddButtonClick: () -> Unit = {}
 ) {
     val items = listOf(
         BottomMenuItem("Inicio", Icons.Rounded.Home),
@@ -56,7 +59,13 @@ fun BottomNavigationBar(
         NavigationBar(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(64.dp),
+                .height(64.dp)
+                .shadow(
+                    elevation = 16.dp,
+                    shape = CircleShape,
+                    spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                    ambientColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                ),
             containerColor = MaterialTheme.colorScheme.surface,
             tonalElevation = 8.dp
         ) {
@@ -105,13 +114,19 @@ fun BottomNavigationBar(
         
         // Add floating action button centered on the navigation bar
         FloatingActionButton(
-            onClick = { /* Handle add action */ },
+            onClick = onAddButtonClick,
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = Color.White,
             shape = CircleShape,
             modifier = Modifier
                 .size(56.dp)
                 .offset(y = (-28).dp)
+                .shadow(
+                    elevation = 8.dp,
+                    shape = CircleShape,
+                    spotColor = PrimaryBlue.copy(alpha = 0.3f),
+                    ambientColor = PrimaryBlue.copy(alpha = 0.15f)
+                )
         ) {
             Icon(
                 imageVector = Icons.Filled.Add,
