@@ -51,6 +51,11 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    
+    // Material Icons Extended
+    implementation("androidx.compose.material:material-icons-core:1.6.2")
+    implementation("androidx.compose.material:material-icons-extended:1.6.2")
+    
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
