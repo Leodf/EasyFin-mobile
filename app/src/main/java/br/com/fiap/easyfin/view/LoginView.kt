@@ -144,7 +144,7 @@ fun LoginView(
                         authViewModel.Login(email, password){ success, errorMessage ->
                             if(success) {
                                 isLoading = false
-                                navController.navigate("onboarding"){
+                                navController.navigate("home"){
                                     popUpTo("auth"){
                                         inclusive = true
                                     }

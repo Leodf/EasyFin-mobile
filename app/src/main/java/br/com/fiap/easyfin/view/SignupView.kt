@@ -155,7 +155,7 @@ fun SignupView(modifier: Modifier = Modifier, navController: NavHostController, 
                         authViewModel.SignUp(email, name, password){ success, errorMessage ->
                             if(success) {
                                 isLoading = false
-                                navController.navigate("home"){
+                                navController.navigate("onboarding"){
                                     popUpTo("auth"){
                                         inclusive = true
                                     }

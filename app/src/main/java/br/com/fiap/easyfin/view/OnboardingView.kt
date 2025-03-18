@@ -110,7 +110,7 @@ fun OnboardingView(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Indicators
+
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.padding(16.dp)
@@ -131,8 +131,7 @@ fun OnboardingView(
             }
             
             Spacer(modifier = Modifier.height(16.dp))
-            
-            // Navigation buttons
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -156,10 +155,7 @@ fun OnboardingView(
                         if (currentPage < onboardingItems.size - 1) {
                             currentPage++
                         } else {
-                            // Mark onboarding as complete
                             userPreferences.setOnboardingComplete(true)
-                            
-                            // Navigate to home when finished
                             navController.navigate("home") {
                                 popUpTo("onboarding") {
                                     inclusive = true
