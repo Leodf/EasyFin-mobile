@@ -8,6 +8,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.fiap.easyfin.components.FinancialInfoCard
+import br.com.fiap.easyfin.components.TotalBalanceCard
 
 @Composable
 fun SummaryCard() {
@@ -20,94 +22,32 @@ fun SummaryCard() {
         TotalBalanceCard(balance = 2000.0)
         Spacer(modifier = Modifier.height(16.dp))
 
-        FinancialInfoCard(
-            title = "Receitas",
-            amount = "R$ 1.000,00",
-            color = Color(0xFF81C784) // Verde
-        )
-        
-        FinancialInfoCard(
-            title = "Gastos",
-            amount = "R$ 500,00",
-            color = Color(0xFFE57373) // Vermelho
-        )
-
-        FinancialInfoCard(
-            title = "Investimentos",
-            amount = "R$ 1.500,00",
-            color = Color(0xFFFFD54F) // Amarelo
-        )
-    }
-}
-
-@Composable
-fun FinancialInfoCard(title: String, amount: String, color: Color) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        elevation = CardDefaults.cardElevation(6.dp),
-        colors = CardDefaults.cardColors(containerColor = color.copy(alpha = 0.15f))
-    ) {
         Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium.copy(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold
-                ),
-                modifier = Modifier.weight(1f),
-                color = color
+            FinancialInfoCard(
+                title = "Receitas",
+                amount = "R$ 1.000,00",
+                color = Color(0xFF81C784),
+                modifier = Modifier
+                    .weight(1f)
             )
-
-            Text(
-                text = amount,
-                style = MaterialTheme.typography.titleLarge.copy(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                ),
-                color = color
+            Spacer(modifier = Modifier.width(5.dp))
+            FinancialInfoCard(
+                title = "Gastos",
+                amount = "R$ 500,00",
+                color = Color(0xFFE57373),
+                modifier = Modifier
+                    .weight(1f)
             )
-        }
-    }
-}
-
-@Composable
-fun TotalBalanceCard(balance: Double) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        elevation = CardDefaults.cardElevation(6.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFE3F2FD)) // Azul claro
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Saldo Total",
-                style = MaterialTheme.typography.titleMedium.copy(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold
-                ),
-                color = Color(0xFF1976D2) // Azul escuro
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "R$ %.2f".format(balance),
-                style = MaterialTheme.typography.titleLarge.copy(
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                ),
-                color = Color(0xFF1E88E5) // Azul escuro forte
+            Spacer(modifier = Modifier.width(5.dp))
+            FinancialInfoCard(
+                title = "Investidos",
+                amount = "R$ 1.500,00",
+                color = Color(0xFFFFD54F),
+                modifier = Modifier
+                    .weight(1f)
             )
         }
     }

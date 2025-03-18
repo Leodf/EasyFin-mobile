@@ -17,11 +17,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.fiap.easyfin.components.HeaderTitle
 import br.com.fiap.easyfin.components.SectionTitle
-import br.com.fiap.easyfin.components.TransactionCard
 import br.com.fiap.easyfin.model.TransactionModel
 import br.com.fiap.easyfin.viewmodel.HomeViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import br.com.fiap.easyfin.components.TransactionCardList
 
 
 @Composable
@@ -80,24 +82,29 @@ fun HomeView(
                         title = "Academia",
                         date = "2024-06-15",
                         amount = "R$ 150,00"
+                    ),
+                    TransactionModel(
+                        id = "4",
+                        title = "Academia",
+                        date = "2024-06-15",
+                        amount = "R$ 150,00"
+                    ),
+                    TransactionModel(
+                        id = "5",
+                        title = "Academia",
+                        date = "2024-06-15",
+                        amount = "R$ 150,00"
                     )
                 )
-
-                TransactionCard(transactions[0], onClick = {})
-                TransactionCard(transactions[1], onClick = {})
-                TransactionCard(transactions[2], onClick = {})
-
-
-
+                TransactionCardList(transactions = transactions, onClick = {})
             }
         }
     )
 }
 
-/* @Preview(showBackground = true, device = "id:pixel_5")
+@Preview(showBackground = true, device = "id:pixel_5")
 @Composable
 fun HomeViewPreview(){
-    HomeView()
+    val navController = rememberNavController()
+    HomeView(navController = navController)
 }
-/
- */
