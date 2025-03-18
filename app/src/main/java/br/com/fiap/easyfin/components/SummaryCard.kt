@@ -222,8 +222,8 @@ fun TotalBalanceCard(balance: Double) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column {
-                    Text(
-                        text = "Saldo Total",
+            Text(
+                text = "Saldo Total",
                         style = MaterialTheme.typography.titleMedium,
                         color = Color.White.copy(alpha = 0.8f)
                     )

@@ -115,6 +115,7 @@ fun OnboardingView(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
+<<<<<<< HEAD
             // Top section with the content
             AnimatedVisibility(
                 visible = true,
@@ -128,6 +129,12 @@ fun OnboardingView(
                             targetOffsetX = { -it },
                             animationSpec = tween(700, easing = FastOutSlowInEasing)
                         )
+=======
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.padding(16.dp)
+>>>>>>> b75eec257ed8e82a4a71c2554f2b0a1f909be22b
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -180,9 +187,19 @@ fun OnboardingView(
                 }
             }
             
+<<<<<<< HEAD
             // Bottom section with indicators and buttons
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
+=======
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+>>>>>>> b75eec257ed8e82a4a71c2554f2b0a1f909be22b
             ) {
                 // Indicators
                 Row(
@@ -206,6 +223,7 @@ fun OnboardingView(
                     }
                 }
                 
+<<<<<<< HEAD
                 // Navigation buttons
                 if (currentPage == onboardingItems.size - 1) {
                     // Final screen - show the Get Started button
@@ -215,6 +233,14 @@ fun OnboardingView(
                             userPreferences.setOnboardingComplete(true)
                             
                             // Navigate to home
+=======
+                Button(
+                    onClick = {
+                        if (currentPage < onboardingItems.size - 1) {
+                            currentPage++
+                        } else {
+                            userPreferences.setOnboardingComplete(true)
+>>>>>>> b75eec257ed8e82a4a71c2554f2b0a1f909be22b
                             navController.navigate("home") {
                                 popUpTo("onboarding") {
                                     inclusive = true

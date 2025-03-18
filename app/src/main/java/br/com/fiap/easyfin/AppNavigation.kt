@@ -18,20 +18,8 @@ import com.google.firebase.auth.auth
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    val context = LocalContext.current
-    val userPreferences = UserPreferences.getInstance(context)
-
-    // Check if user is already logged in
     val isLoggedIn = Firebase.auth.currentUser != null
-    // Check if user has seen onboarding
-    val hasSeenOnboarding = userPreferences.hasSeenOnboarding()
-    
-    // Choose starting destination based on login status
-    val firstPage = if(isLoggedIn) {
-        if (hasSeenOnboarding) "home" else "onboarding"
-    } else {
-        "auth"
-    }
+    val firstPage = if(isLoggedIn)  "home" else "auth"
 
     NavHost(navController = navController, startDestination = firstPage) {
         composable("auth") {

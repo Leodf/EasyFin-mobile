@@ -234,6 +234,7 @@ fun LoginView(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
+<<<<<<< HEAD
                     // Back button
                     OutlinedButton(
                         onClick = { navController.navigate("auth") },
@@ -262,6 +263,20 @@ fun LoginView(
                                         popUpTo("auth") {
                                             inclusive = true
                                         }
+=======
+                    Text(text = "Voltar", fontSize = 22.sp)
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(
+                    onClick = {
+                        isLoading = true
+                        authViewModel.Login(email, password){ success, errorMessage ->
+                            if(success) {
+                                isLoading = false
+                                navController.navigate("home"){
+                                    popUpTo("auth"){
+                                        inclusive = true
+>>>>>>> b75eec257ed8e82a4a71c2554f2b0a1f909be22b
                                     }
                                 } else {
                                     isLoading = false
